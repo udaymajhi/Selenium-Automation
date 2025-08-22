@@ -1,9 +1,9 @@
+# register.py
 from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-import random
-import string
+from random_mail import email_here
 
 def register():
     driver = webdriver.Chrome()
@@ -21,37 +21,34 @@ def register():
     # Click on SignUp and Login
     signup_login = driver.find_element(By.XPATH, "//a[normalize-space()='Signup / Login']")
     signup_login.click()
+    time.sleep(2)
 
     # Fill Name
     name = driver.find_element(By.XPATH, "//input[@placeholder='Name']")
     name.send_keys("Salman Khan")
-
     time.sleep(2)
 
-    # Generate random email
-    rand_mail = ''.join(random.choices(string.ascii_lowercase + string.digits, k=10))
-    full_mail = f"{rand_mail}@mailinator.com"
-    print(f"Generated email: {full_mail}")
+    # Use random email from separate file
+    full_mail = email_here()
 
     # Fill Email
     email_input = driver.find_element(By.XPATH, "(//input[@data-qa='signup-email'])[1]")
     email_input.send_keys(full_mail)
-
     time.sleep(2)
 
-    # Click Signup Button
+    # Click Signup button
     signup_button = driver.find_element(By.XPATH, "//button[normalize-space()='Signup']")
     signup_button.click()
     time.sleep(2)
 
-    # Fill in the signup form
+    # Fill the signup form
     sex_title = driver.find_element(By.ID, "id_gender1")
     sex_title.click()
 
     password = driver.find_element(By.ID, "password")
     password.send_keys("Test@1234")
 
-    # Date of Birth
+    # Date of birth selects
     day = Select(driver.find_element(By.ID, "days"))
     day.select_by_value("10")
 
@@ -60,6 +57,48 @@ def register():
 
     year = Select(driver.find_element(By.ID, "years"))
     year.select_by_value("1999")
+
+    newsletter = driver.find_element(By.ID,"newsletter")
+    newsletter.click()
+
+    offers = driver.find_element(By.ID, "optin")
+    offers.click()
+
+    first_name = driver.find_element(By.ID,"first_name")
+    first_name.send_keys("Salman")
+
+    last_name = driver.find_element(By.ID, "last_name")
+    last_name.send_keys("Khan")
+
+    company = driver.find_element(By.ID, "company")
+    company.send_keys("Sakhu")
+
+    address1 = driver.find_element(By.ID, "address1")
+    address1.send_keys("Sakhuware")
+
+    address2 = driver.find_element(By.ID, "address2")
+    address2.send_keys("Gadhi")
+
+    country = Select(driver.find_element(By.ID,"country"))
+    country.select_by_value("New Zealand")
+
+    state = driver.find_element(By.ID, "state")
+    state.send_keys("Province 1")
+
+    city = driver.find_element(By.ID, "city")
+    city.send_keys("New Zea")
+
+    zipcode = driver.find_element(By.ID, "zipcode")
+    zipcode.send_keys("46000")
+
+    mobile_number = driver.find_element(By.ID, "mobile_number")
+    mobile_number.send_keys("Salman Khan")
+
+    create_account = driver.find_element(By.XPATH,"//button[normalize-space()='Create Account']")
+    create_account.click()
+
+    create_account = driver.find_element(By.XPATH, "//button[normalize-space()='Create Account']")
+    create_account.click()
 
     time.sleep(5)
     driver.quit()
