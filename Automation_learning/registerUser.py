@@ -6,12 +6,14 @@ from selenium.webdriver.support.ui import Select
 from random_mail import email_here
 
 def register():
+    # Launch browser
     driver = webdriver.Chrome()
+    # Navigate to url 'http://automationexercise.com'
     driver.get("https://automationexercise.com/")
     driver.maximize_window()
     time.sleep(3)
 
-    # Assert title
+    # Verify that home page is visible successfully
     try:
         assert "Automation Exercise" in driver.title
         print("Home page is visible")
@@ -22,6 +24,13 @@ def register():
     signup_login = driver.find_element(By.XPATH, "//a[normalize-space()='Signup / Login']")
     signup_login.click()
     time.sleep(2)
+
+    # Verify that home page is visible successfully
+    try:
+        assert "Automation Exercise - Signup / Login" in driver.title
+        print("Sign Up page Visisble")
+    except AssertionError:
+        print("Sign Up page is not visible")
 
     # Fill Name
     name = driver.find_element(By.XPATH, "//input[@placeholder='Name']")
@@ -97,10 +106,12 @@ def register():
     create_account = driver.find_element(By.XPATH,"//button[normalize-space()='Create Account']")
     create_account.click()
 
-    create_account = driver.find_element(By.XPATH, "//button[normalize-space()='Create Account']")
-    create_account.click()
+    print("Account created successfully")
+    time.sleep(8)
 
-    time.sleep(5)
+    continues = driver.find_element(By.XPATH, "//a[normalize-space()='Continue']")
+    continues.click()
+
     driver.quit()
 
 register()
